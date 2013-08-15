@@ -35,11 +35,10 @@ class product_product(osv.osv):
 	product_obj = self.pool.get('product.product')
 	invoice_obj = self.pool.get('account.invoice')
 	invoice_line_obj = self.pool.get('account.invoice.line')
-
 	product_ids = product_obj.search(cr,uid,[('cost_method','=','last_purchase')])
 
-	max_date = 0	
 	for product in product_obj.browse(cr,uid,product_ids):
+		max_date = 0	
 		invoice_line_ids = invoice_line_obj.search(cr,uid,[('product_id','=',product.id)])
 		for invoice_line in invoice_line_obj.browse(cr,uid,invoice_line_ids):
 			if invoice_line.invoice_id.state in ('paid','open') \
